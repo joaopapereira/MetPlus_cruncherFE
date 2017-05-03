@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import CruncherModel from '../models/CruncherModel';
+
 export default class Cruncher extends React.Component {
   constructor(props) {
     super(props);
   }
   renderProperties() {
     let settingsList = [];
-    this.props.cruncherInfo.settings.forEach((setting, id) => {
+    this.props.cruncherInfo.getSettings().forEach((setting, id) => {
       settingsList.push(<li className="settings" key={id}>
-        {setting['name']}
+        {setting.name}: <input value={setting.value} type='text'/>
       </li>);
     });
     return settingsList;
@@ -28,5 +30,5 @@ export default class Cruncher extends React.Component {
 };
 
 Cruncher.propTypes = {
-  cruncherInfo: PropTypes.object.isRequired,
+  cruncherInfo: PropTypes.instanceOf(CruncherModel).isRequired,
 }

@@ -28,4 +28,5 @@ module.exports = {
     'react-dom/test-utils': true,
     'react-test-renderer/shallow': true,
   },
+  devtool: 'inline-source-map',
 };

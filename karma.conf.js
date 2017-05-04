@@ -8,6 +8,7 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-mocha-reporter',
       'karma-chai',
+      'karma-sourcemap-loader'
     ],
     files: [
       {pattern: 'src/**/*.js', included: false},
@@ -16,8 +17,8 @@ module.exports = function(config) {
       'test/**/*.js',
     ],
     preprocessors: {
-      'test/**/*.js': ['webpack'],
-      'test/**/*.jsx': ['webpack'],
+      'test/**/*.js': ['webpack', 'sourcemap'],
+      'test/**/*.jsx': ['webpack', 'sourcemap'],
     },
     webpack: webpackConfig,
     webpackMiddleware: {
@@ -35,7 +36,7 @@ module.exports = function(config) {
         success: 'green',
         info: 'bgBlue',
         warning: 'cyan',
-        error: 'bgRed'
+        error: 'bgRed',
       },
       symbols: {
         success: '+',

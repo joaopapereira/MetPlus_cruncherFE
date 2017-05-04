@@ -23,8 +23,7 @@ describe('Cruncher Service', () => {
       it('should return empty array', (done) => {
         cruncherService.getCruncherInformation().then((cruncherInformation) => {
           expect(cruncherInformation).to.have.length(0);
-          done();
-        });
+        }).then(done).catch(done);
       });
     });
     describe('when one cruncher information is returned', () => {
@@ -40,23 +39,63 @@ describe('Cruncher Service', () => {
               },
             },
           };
-          const resolved = new Promise((resolve) => resolve({ data: cruncherInformation }));
+          const resolved = new Promise((resolve) => resolve(cruncherInformation));
           sandbox.stub(axios, 'get').returns(resolved);
         });
 
         it('should return an array with one cruncher', (done) => {
           cruncherService.getCruncherInformation().then((cruncherInformation) => {
             expect(cruncherInformation).to.have.length(1);
-            expect(crun)
-            done();
-          });
+          }).then(done).catch(done);
         });
         
         it('should set name of the cruncher to "bamm"', (done) => {
           cruncherService.getCruncherInformation().then((cruncherInformation) => {
             expect(cruncherInformation[0].name).to.equal('bamm');
-            done();
-          });
+          }).then(done).catch(done);
+        });
+        
+        it('should have no settings', (done) => {
+          cruncherService.getCruncherInformation().then((cruncherInformation) => {
+            expect(cruncherInformation[0].getSettings()).to.have.length(0);
+          }).then(done).catch(done);
+        });
+      });
+
+      describe('with settings', () => {
+        beforeEach(() => {
+          let cruncherInformation = {
+            'cruncherSettings': {
+              'bamm': {
+                'settings': {
+                  'setting 1': {
+                    name: 'setting 1',
+                    data: 'value 1',
+                  },
+                  'setting 2': {
+                    name: 'setting 2',
+                    data: 'value 2',
+                  },
+                },
+                'mandatory': ['setting 1'],
+                'id': null,
+              },
+            },
+          };
+          const resolved = new Promise((resolve) => resolve(cruncherInformation));
+          sandbox.stub(axios, 'get').returns(resolved);
+        });
+        
+        it('should have 2 settings', (done) => {
+          cruncherService.getCruncherInformation().then((cruncherInformation) => {
+            expect(cruncherInformation[0].getSettings()).to.have.length(2);
+          }).then(done).catch(done);
+        });
+
+        it('should construct correctly', (done) => {
+          cruncherService.getCruncherInformation().then((cruncherInformation) => {
+            expect(cruncherInformation[0].getSettings()).to.have.length(1);
+          }).then(done).catch(done);
         });
       });
     });

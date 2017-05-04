@@ -6,12 +6,18 @@ export default class CruncherService {
   }
   getCruncherInformation() {
     return axios.get(this.cruncherURL)
-                .then((data) => {
-                  if(!!data.cruncherSettings && data.cruncherSettings.length === 0) {
-                    return [];
-                  } else {
-                    return [new CruncherModel()];
-                  }
-                });
+      .then((data) => {
+        if (!data.cruncherSettings
+          || data.cruncherSettings.length === 0) {
+          return [];
+        } else {
+          let allCrunchers = [];
+          let settings = data.cruncherSettings;
+          for(let name in settings) {
+            allCrunchers.push(CruncherModel.build(name, settings[name]));
+          }
+          return allCrunchers;
+        }
+      });
   }
 }

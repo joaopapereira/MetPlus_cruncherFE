@@ -6,25 +6,6 @@ import Cruncher from '../src/components/cruncher';
 import CruncherModel from '../src/models/CruncherModel';
 import CruncherSetting from '../src/models/CruncherSetting';
 
-let test = {
-  "cruncherSettings": {
-    "bamm": {
-      "settings": {
-        "setting 1": {
-          "name": "setting 1",
-          "data": "data 1"
-        },
-        "setting 2": {
-          "name": "setting 2",
-          "data": "data 2"
-        }
-      },
-      "mandatory": ["setting 1"],
-      "id": null
-    }
-  },
-}
-
 describe('<Cruncher>', () => {
   let cruncherObject;
   beforeEach(() => {

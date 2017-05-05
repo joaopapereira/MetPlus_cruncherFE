@@ -4,7 +4,7 @@
   "description": "Interface for cruncher",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -w test/helpers/browser.js test/*.spec.js test/*.spec.jsx",
+    "test": "karma start",
     "dev:hot": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./",
     "start": "webpack-dev-server --hot --inline --progress --colors --watch --content-base ./",
     "lint": "eslint src/**/*.jsx --color",

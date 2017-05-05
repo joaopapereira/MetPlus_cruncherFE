@@ -18,6 +18,9 @@ export default class CruncherService {
           }
           return allCrunchers;
         }
+      })
+      .catch(() => {
+        return null;
       });
   }
 }

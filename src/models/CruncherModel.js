@@ -16,8 +16,12 @@ export default class CruncherModel {
   static build(name, jsonObject) {
     if(!!jsonObject) {
       let cruncher = new CruncherModel(name);
-      for(let setting in jsonObject['settings']) {
-        cruncher.addSetting(new CruncherSetting(setting['name'], setting['data']));
+      for(let settingName in jsonObject['settings']) {
+        let setting = jsonObject['settings'][settingName];
+        cruncher.addSetting(
+          new CruncherSetting(setting['name'], 
+          setting['data'],
+          jsonObject['mandatory'].includes(setting['name'])));
       }
       return cruncher;
     }

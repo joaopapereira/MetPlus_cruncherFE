@@ -19,7 +19,8 @@ export default class CruncherService {
           return allCrunchers;
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         return null;
       });
   }

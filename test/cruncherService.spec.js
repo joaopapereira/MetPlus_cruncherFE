@@ -49,13 +49,13 @@ describe('Cruncher Service', () => {
             expect(cruncherInformation).to.have.length(1);
           }).then(done).catch(done);
         });
-        
+
         it('should set name of the cruncher to "bamm"', (done) => {
           cruncherService.getCruncherInformation().then((cruncherInformation) => {
             expect(cruncherInformation[0].name).to.equal('bamm');
           }).then(done).catch(done);
         });
-        
+
         it('should have no settings', (done) => {
           cruncherService.getCruncherInformation().then((cruncherInformation) => {
             expect(cruncherInformation[0].getSettings()).to.have.length(0);
@@ -86,7 +86,7 @@ describe('Cruncher Service', () => {
           const resolved = new Promise((resolve) => resolve(cruncherInformation));
           sandbox.stub(axios, 'get').returns(resolved);
         });
-        
+
         it('should have 2 settings', (done) => {
           cruncherService.getCruncherInformation().then((cruncherInformation) => {
             expect(cruncherInformation[0].getSettings()).to.have.length(2);
@@ -102,6 +102,54 @@ describe('Cruncher Service', () => {
             expect(setting.mandatory).to.be.true;
           }).then(done).catch(done);
         });
+      });
+
+      describe('with more complex settings', function(){
+        beforeEach(function(){
+          let settings = {
+            'cruncherSettings': {
+              'cruncher-name': {
+                'settings': {
+                  'setting-one': {
+                    'name': 'setting-one',
+                    'data': [
+                      'value 1',
+                      'value 2',
+                    ],
+                  },
+                  'setting-two': {
+                    'name': 'setting-two',
+                    'data': {
+                      'value 3': [
+                        'test 1',
+                        'test 2',
+                      ],
+                      'value 4': [
+                        'test 3',
+                      ],
+                      'value 5': [],
+                    },
+                  },
+                },
+                'mandatory': [],
+              },
+            },
+          };
+
+          const resolved = new Promise((resolve) => resolve(settings));
+          sandbox.stub(axios, 'get').returns(resolved);
+        });
+
+        it('should display level 2 settings', function(done){
+          cruncherService.getCruncherInformation().then((cruncherInformation) => {
+            expect(cruncherInformation[0].getSettings()).to.have.length(2);
+            let setting = cruncherInformation[0].getSettings()[1];
+            expect(setting).to.instanceOf(CruncherSetting);
+            expect(setting.name).to.eql('setting-two');
+            expect(setting.value).to.instanceOf(CruncherSetting);
+          }).then(done).catch(done);
+        });
+
       });
     });
   });

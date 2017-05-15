@@ -16,7 +16,7 @@ describe('<Cruncher>', () => {
 
   describe('when displayed', () => {
     it('should should render', () => {
-      const wrapper = shallow(<Cruncher cruncherInfo={cruncherObject} />);
+      shallow(<Cruncher cruncherInfo={cruncherObject} />);
     });
 
     it('should display name of the cruncher', () => {

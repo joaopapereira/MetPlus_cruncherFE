@@ -8,7 +8,8 @@ module.exports = function(config) {
       'karma-mocha',
       'karma-mocha-reporter',
       'karma-chai',
-      'karma-sourcemap-loader'
+      'karma-sourcemap-loader',
+      'karma-phantomjs-launcher',
     ],
     files: [
       {pattern: 'src/**/*.js', included: false},
@@ -31,6 +32,7 @@ module.exports = function(config) {
     autoWatch: true,
     singleRun: false,
     concurrency: Infinity,
+    browser: ['PhantomJS'],
     mochaReporter: {
       colors: {
         success: 'green',
